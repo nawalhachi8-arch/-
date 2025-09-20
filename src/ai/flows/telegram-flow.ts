@@ -7,13 +7,10 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 
-// You must set these environment variables in your .env file
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+// Hardcoded values for simplicity
+const TELEGRAM_BOT_TOKEN = "8365032928:AAF9D7xhT16s98i30mJQrdXMOw-SmaAj35w";
+const TELEGRAM_CHAT_ID = "7519641546";
 
-if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
-  console.warn("Telegram environment variables (TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID) are not set. The withdrawal feature will not work.");
-}
 
 export async function sendTelegramMessage(message: string): Promise<{ ok: boolean, description?: string }> {
   return await telegramFlow(message);
@@ -30,7 +27,7 @@ const telegramFlow = ai.defineFlow(
   },
   async (message) => {
     if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
-        throw new Error("Telegram environment variables are not set on the server.");
+        throw new Error("Telegram token or chat ID are not set in the code.");
     }
 
     const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
